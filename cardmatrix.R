@@ -35,66 +35,134 @@
 #will be used until actual functions are ready
 
 DRAFTgenerateMatrix <- function(){
+  cardBoard <- sample(list.files(path = "www/", pattern = "png$"), 18)
+  cardBoard <- sample(rep(cardBoard, 2))
+  # print(cardBoard)
+  
+  # trying to create a for loop but not too sure how
+  # matrix <- for (i in 1:6) {
+  #   for (j in 1:6) {
+  #     list(
+  #       i = list(
+  #         j = list("img" = cardBoard[(i-1)*6 + j], "act" = FALSE, "open" = FALSE)
+  #       )
+  #     )
+  #   }
+  # }
+  # print(matrix)
+  
   return(
+    
     list(
          '1' = list(
-           '1' = list("img" = "A.png", "act" = TRUE, "open" = FALSE),
-           '2' = list("img" = "A.png", "act" = TRUE, "open" = FALSE),
-           '3' = list("img" = "B.png", "act" = TRUE, "open" = FALSE),
-           '4' = list("img" = "B.png", "act" = TRUE, "open" = FALSE),
-           '5' = list("img" = "C.png", "act" = TRUE, "open" = FALSE),
-           '6' = list("img" = "C.png", "act" = TRUE, "open" = FALSE)
+           '1' = list("img" = cardBoard[1], "act" = TRUE, "open" = FALSE),
+           '2' = list("img" = cardBoard[2], "act" = TRUE, "open" = FALSE),
+           '3' = list("img" = cardBoard[3], "act" = TRUE, "open" = FALSE),
+           '4' = list("img" = cardBoard[4], "act" = TRUE, "open" = FALSE),
+           '5' = list("img" = cardBoard[5], "act" = TRUE, "open" = FALSE),
+           '6' = list("img" = cardBoard[6], "act" = TRUE, "open" = FALSE)
         ),
          '2' = list(
-           '1' = list("img" = "D.png", "act" = TRUE, "open" = FALSE),
-           '2' = list("img" = "D.png", "act" = TRUE, "open" = FALSE),
-           '3' = list("img" = "e.png", "act" = FALSE, "open" = FALSE),
-           '4' = list("img" = "e.png", "act" = FALSE, "open" = FALSE),
-           '5' = list("img" = "f.png", "act" = FALSE, "open" = FALSE),
-           '6' = list("img" = "f.png", "act" = FALSE, "open" = FALSE)
+           '1' = list("img" = cardBoard[7], "act" = TRUE, "open" = FALSE),
+           '2' = list("img" = cardBoard[8], "act" = TRUE, "open" = FALSE),
+           '3' = list("img" = cardBoard[9], "act" = FALSE, "open" = FALSE),
+           '4' = list("img" = cardBoard[10], "act" = FALSE, "open" = FALSE),
+           '5' = list("img" = cardBoard[11], "act" = FALSE, "open" = FALSE),
+           '6' = list("img" = cardBoard[12], "act" = FALSE, "open" = FALSE)
          ),
          '3' = list(
-           '1' = list("img" = "g.png", "act" = FALSE, "open" = FALSE),
-           '2' = list("img" = "g.png", "act" = FALSE, "open" = FALSE),
-           '3' = list("img" = "h.png", "act" = FALSE, "open" = FALSE),
-           '4' = list("img" = "h.png", "act" = FALSE, "open" = FALSE),
-           '5' = list("img" = "i.png", "act" = FALSE, "open" = FALSE),
-           '6' = list("img" = "i.png", "act" = FALSE, "open" = FALSE)
+           '1' = list("img" = cardBoard[13], "act" = FALSE, "open" = FALSE),
+           '2' = list("img" = cardBoard[14], "act" = FALSE, "open" = FALSE),
+           '3' = list("img" = cardBoard[15], "act" = FALSE, "open" = FALSE),
+           '4' = list("img" = cardBoard[16], "act" = FALSE, "open" = FALSE),
+           '5' = list("img" = cardBoard[17], "act" = FALSE, "open" = FALSE),
+           '6' = list("img" = cardBoard[18], "act" = FALSE, "open" = FALSE)
          ),
          '4' = list(
-           '1' = list("img" = "j.png", "act" = FALSE, "open" = FALSE),
-           '2' = list("img" = "j.png", "act" = FALSE, "open" = FALSE),
-           '3' = list("img" = "k.png", "act" = FALSE, "open" = FALSE),
-           '4' = list("img" = "k.png", "act" = FALSE, "open" = FALSE),
-           '5' = list("img" = "l.png", "act" = FALSE, "open" = FALSE),
-           '6' = list("img" = "l.png", "act" = FALSE, "open" = FALSE)
+           '1' = list("img" = cardBoard[19], "act" = FALSE, "open" = FALSE),
+           '2' = list("img" = cardBoard[20], "act" = FALSE, "open" = FALSE),
+           '3' = list("img" = cardBoard[21], "act" = FALSE, "open" = FALSE),
+           '4' = list("img" = cardBoard[22], "act" = FALSE, "open" = FALSE),
+           '5' = list("img" = cardBoard[23], "act" = FALSE, "open" = FALSE),
+           '6' = list("img" = cardBoard[24], "act" = FALSE, "open" = FALSE)
          ),
          '5' = list(
-           '1' = list("img" = "m.png", "act" = FALSE, "open" = FALSE),
-           '2' = list("img" = "m.png", "act" = FALSE, "open" = FALSE),
-           '3' = list("img" = "n.png", "act" = FALSE, "open" = FALSE),
-           '4' = list("img" = "n.png", "act" = FALSE, "open" = FALSE),
-           '5' = list("img" = "o.png", "act" = FALSE, "open" = FALSE),
-           '6' = list("img" = "o.png", "act" = FALSE, "open" = FALSE)
+           '1' = list("img" = cardBoard[25], "act" = FALSE, "open" = FALSE),
+           '2' = list("img" = cardBoard[26], "act" = FALSE, "open" = FALSE),
+           '3' = list("img" = cardBoard[27], "act" = FALSE, "open" = FALSE),
+           '4' = list("img" = cardBoard[28], "act" = FALSE, "open" = FALSE),
+           '5' = list("img" = cardBoard[29], "act" = FALSE, "open" = FALSE),
+           '6' = list("img" = cardBoard[30], "act" = FALSE, "open" = FALSE)
          ),
          '6' = list(
-           '1' = list("img" = "p.png", "act" = FALSE, "open" = FALSE),
-           '2' = list("img" = "p.png", "act" = FALSE, "open" = FALSE),
-           '3' = list("img" = "q.png", "act" = FALSE, "open" = FALSE),
-           '4' = list("img" = "q.png", "act" = FALSE, "open" = FALSE),
-           '5' = list("img" = "r.png", "act" = FALSE, "open" = FALSE),
-           '6' = list("img" = "r.png", "act" = FALSE, "open" = FALSE)
+           '1' = list("img" = cardBoard[31], "act" = FALSE, "open" = FALSE),
+           '2' = list("img" = cardBoard[32], "act" = FALSE, "open" = FALSE),
+           '3' = list("img" = cardBoard[33], "act" = FALSE, "open" = FALSE),
+           '4' = list("img" = cardBoard[34], "act" = FALSE, "open" = FALSE),
+           '5' = list("img" = cardBoard[35], "act" = FALSE, "open" = FALSE),
+           '6' = list("img" = cardBoard[36], "act" = FALSE, "open" = FALSE)
          )
          )
     )
 }
 
 DRAFTcheckCard <- function(cardmatrix, card1, card2){ 
+  # print(ls(card1))
+  row1 <- card1[["row"]]
+  col1 <- card1[["col"]]
+  row2 <- card2[["row"]]
+  col2 <- card2[["col"]]
+  # print(paste(row1, col1, row2, col2, sep=" "))
 #card1, card2 entered same fashion as 
 #gameVal$firstCard, e.g. list("row" = "1", "col" = "2")
+  
   output = DRAFTgenerateMatrix()
-  output[["1"]][["1"]][["open"]]  <-  TRUE
-  output[["1"]][["2"]][["open"]]  <-  TRUE
-  return(list ("check" = TRUE,
-         "cardMatrix" = output))
+  output[[row1]][[col1]][["open"]]  <-  TRUE
+  output[[row2]][[col2]][["open"]]  <-  TRUE
+  
+  img1 <- output[[row1]][[col1]][["img"]]
+  img2 <- output[[row2]][[col2]][["img"]]
+  # print(paste(img1, img2, sep=" "))
+  
+  if (identical(img1, img2)) {
+    return(list ("check" = TRUE, 
+                 "cardMatrix" = output))
+  } else {
+    return(list ("check" = FALSE, "cardMatrix" = output))
+  }
+
+  
+  
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
