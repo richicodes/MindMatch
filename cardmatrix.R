@@ -120,10 +120,12 @@ DRAFTcheckCard <- function(cardmatrix, card1, card2){
   output[[row1]][[col1]][["open"]]  <-  TRUE
   output[[row2]][[col2]][["open"]]  <-  TRUE
   
+  # to obtain the file name of the image
   img1 <- output[[row1]][[col1]][["img"]]
   img2 <- output[[row2]][[col2]][["img"]]
   # print(paste(img1, img2, sep=" "))
   
+  # if both are action cards, (act1 & act2) will return TRUE
   act1 <- output[[row1]][[col1]][["act"]]
   act2 <- output[[row2]][[col2]][["act"]]
   
