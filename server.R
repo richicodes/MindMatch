@@ -39,6 +39,8 @@ shinyServer(function(input, output, session) {
     #stores order of cards, whether if it is opened
     cardMatrix = NULL,
     #cardMatrix, but between when questions are answered so board can revert back
+    cardBoard = NULL,
+    #stores the order of the cards on the board
     cardMatrixTemp = NULL,
     #stores the first unflipped card
     firstCard = list("row" = FALSE, "col" = FALSE),
@@ -134,13 +136,13 @@ shinyServer(function(input, output, session) {
       
       #show real card if its already opened
       if (card[["open"]]){ #if card is opened
-        imgsrc <- paste0("www/", card["img"])
+        imgsrc <- paste0("www/patterns/", card["img"])
       }
       else{
         #show real card if flipped open by game action
         if ((gameVals$firstCard[["row"]] == row  && gameVals$firstCard[["col"]] == col) |
             (gameVals$secondCard[["row"]] == row  && gameVals$secondCard[["col"]] == col)){
-          imgsrc <- paste0("www/", card["img"])
+          imgsrc <- paste0("www/patterns/", card["img"])
         }
         #show closed card if flipped if its closed
         else{
@@ -205,9 +207,12 @@ shinyServer(function(input, output, session) {
     
     #only react if card is closed
     if (!card[["open"]]){ #ADD: or in openedcard gameval
+      
       #if its second card
       if (gameVals$gameState == "PC2"){
+        
         gameVals$secondCard <- list("row" = row, "col" = col)
+        
         #checks results
         outcome <- DRAFTcheckCard(gameVals$cardMatrix, gameVals$firstCard, gameVals$secondCard)
         if (outcome[["check"]]){
@@ -226,7 +231,7 @@ shinyServer(function(input, output, session) {
           gameVals$firstCard <- list("row" = FALSE, "col" = FALSE)
           gameVals$secondCard <- list("row" = FALSE, "col" = FALSE)
           #have some notification come out
-          showNotification(paste0("Cards do not match. Now swith to ", gameVals$playerName))
+          showNotification(paste0("Cards do not match. Now switch to ", gameVals$playerName))
         }
         
       }

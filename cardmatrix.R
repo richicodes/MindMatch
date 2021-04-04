@@ -35,7 +35,7 @@
 #will be used until actual functions are ready
 
 DRAFTgenerateMatrix <- function(){
-  cardBoard <- sample(list.files(path = "www/", pattern = "png$"), 18)
+  cardBoard <- sample(list.files(path = "www/patterns/", pattern = "png$"), 18)
   cardBoard <- sample(rep(cardBoard, 2))
   # print(cardBoard)
   
@@ -124,8 +124,12 @@ DRAFTcheckCard <- function(cardmatrix, card1, card2){
   img2 <- output[[row2]][[col2]][["img"]]
   # print(paste(img1, img2, sep=" "))
   
+  act1 <- output[[row1]][[col1]][["act"]]
+  act2 <- output[[row2]][[col2]][["act"]]
+  
   if (identical(img1, img2)) {
     return(list ("check" = TRUE, 
+                 "action" = act1 & act2,
                  "cardMatrix" = output))
   } else {
     return(list ("check" = FALSE, "cardMatrix" = output))
@@ -137,7 +141,9 @@ DRAFTcheckCard <- function(cardmatrix, card1, card2){
 
 
 
-
+a <- FALSE
+b <- FALSE
+a & b
 
 
 
