@@ -95,18 +95,30 @@ shinyServer(function(input, output, session) {
   #output for side panel
   output$sidebarInstruction <- renderUI(
     if (vals$tabOpen == "MenuTab"){
-      "INSTRUCTIONS goes here"
+      fluidPage(
+      tags$h4("Learn how to support how to support your loved ones with mental health concerns!"), 
+      tags$hr(),
+      tags$h5("How to play:"), 
+      tags$ul(
+        tags$li("Each player takes turns to flip any 2 memory cards within 20 seconds."), 
+        tags$li("If the picture on the memory card matches, the player proceed to answer a randomly generated quiz question. Otherwise, the mismatched cards are flipped back and the turn ends. Then, it’s the next player turn to flip any 2 cards."), 
+        tags$li("If the quiz question is answered correctly, the player collects the 2 matching memory cards and scores a point for each card collected. If answered incorrectly, opponent gets the cards and earns points instead."),
+        tags$li("To obtain a chance card, the player must find the matching memory card with the clover symbol in the top right corner."),
+        tags$li("The chance card is randomly selected and it will be effective immediately before the player answers a quiz question."),
+        tags$li("The game ends when all of the memory cards are matched and the player with the most points wins the game.")
+      )
+      ) 
     }
     else if (vals$tabOpen == "GameTab"){
       if (gameVals$gameState == "PC1") {
         #prompt for choices if game state is AQ
         tabPanel("gameInfoDisplay", 
-                 paste0(gameVals$playerName, " pick first card"))
+                 paste0(gameVals$playerName, " pick first card."))
       }
       else if (gameVals$gameState == "PC2") {
         #prompt for choices if game state is AQ
         tabPanel("gameInfoDisplay", 
-                 paste0(gameVals$playerName, " pick second card"))
+                 paste0(gameVals$playerName, " pick second card."))
       }
       else if (gameVals$gameState == "AQ") {
         #retrieve question
@@ -231,7 +243,7 @@ shinyServer(function(input, output, session) {
           gameVals$firstCard <- list("row" = FALSE, "col" = FALSE)
           gameVals$secondCard <- list("row" = FALSE, "col" = FALSE)
           #have some notification come out
-          showNotification(paste0("Cards do not match. Now switch to ", gameVals$playerName))
+          showNotification(paste0("Cards do not match. Now, switch to ", gameVals$playerName, "'s turn."))
         }
         
       }
@@ -304,7 +316,7 @@ shinyServer(function(input, output, session) {
     }
     else {
       #if incorrect, add score of other player
-      showNotification("Sorry u are wrong")
+      showNotification("Wrong answer.")
       if (gameVals$playerTurn == 1){
         playerVals$player2Score <- playerVals$player2Score + 1
       }
