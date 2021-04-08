@@ -34,7 +34,7 @@
 #these draft functions return a default result
 #will be used until actual functions are ready
 
-DRAFTgenerateMatrix <- function(){
+generateMatrix <- function(){
   cardBoard <- sample(list.files(path = "www/patterns/", pattern = "png$"), 18)
   cardBoard <- sample(rep(cardBoard, 2))
   # print(cardBoard)
@@ -106,7 +106,7 @@ DRAFTgenerateMatrix <- function(){
     )
 }
 
-DRAFTcheckCard <- function(cardmatrix, card1, card2){ 
+checkCard <- function(cardmatrix, card1, card2){ 
   # print(ls(card1))
   row1 <- card1[["row"]]
   col1 <- card1[["col"]]
@@ -116,7 +116,7 @@ DRAFTcheckCard <- function(cardmatrix, card1, card2){
 #card1, card2 entered same fashion as 
 #gameVal$firstCard, e.g. list("row" = "1", "col" = "2")
   
-  output = DRAFTgenerateMatrix()
+  output = cardmatrix
   output[[row1]][[col1]][["open"]]  <-  TRUE
   output[[row2]][[col2]][["open"]]  <-  TRUE
   

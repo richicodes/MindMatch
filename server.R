@@ -2,6 +2,8 @@
 source("usePackages.R")
 source("cardmatrix.R")
 source("questions.R")
+source("instructionModal.R")
+source("endModal.R")
 
 # Name of the packages 
 pkgnames <- c("shiny")
@@ -32,14 +34,14 @@ shinyServer(function(input, output, session) {
     #game state (e.g. is it to pick card or answer question)
     # PC1: pick first card
     # PC2: pick second card
+    # WC: wrong card
     # AQ: answer question
+    # EG: end game
     gameState = NULL,
-    #power card, if we ever get to that state
-    powerCard = NULL,
+    #action card, if we ever get to that state
+    actionCard = NULL,
     #stores order of cards, whether if it is opened
     cardMatrix = NULL,
-    #cardMatrix, but between when questions are answered so board can revert back
-    cardBoard = NULL,
     #stores the order of the cards on the board
     cardMatrixTemp = NULL,
     #stores the first unflipped card
@@ -49,7 +51,9 @@ shinyServer(function(input, output, session) {
     #stores questions that are answered
     questionsAnswered = c(),
     #stores answer
-    answerCorrect = NULL
+    answerCorrect = NULL, 
+    #stores cards that are opened
+    cardsOpened = c()
     )
   
   questionvals <- reactiveValues(question = NULL) #TBC
@@ -68,6 +72,22 @@ shinyServer(function(input, output, session) {
     vals$tabOpen <- input$tabsPanel
   })
   
+  #reset game
+  gameReset <- function(){
+    #initialise game settingswhen new game starts
+    gameVals$cardMatrix <- generateMatrix()
+    gameVals$cardMatrixTemp <-  NULL
+    gameVals$playerTurn <-  1
+    gameVals$playerName <- playerVals$player1Name
+    gameVals$gameState <- "PC1"
+    gameVals$questionsAnswered <- c()
+    gameVals$cardsOpened <- c()
+    firstCard = list("row" = FALSE, "col" = FALSE)
+    secondCard = list("row" = FALSE, "col" = FALSE)
+    playerVals$player1Score <-  0
+    playerVals$player2Score <-  0
+  }
+  
   observeEvent(input$startButt, { 
     #unhide game tab and switches to it
     showTab(inputId = "tabsPanel", target = "GameTab")
@@ -77,15 +97,8 @@ shinyServer(function(input, output, session) {
     if (nchar(input$player1Name) > 0){playerVals$player1Name <- input$player1Name} 
     if (nchar(input$player2Name) > 0){playerVals$player2Name <- input$player2Name}
     
-    #initialise game settingswhen new game starts
-    gameVals$cardMatrix <- DRAFTgenerateMatrix()
-    gameVals$playerTurn <-  1
-    gameVals$playerName <- playerVals$player1Name
-    gameVals$gameState <- "PC1"
-    firstCard = list("row" = FALSE, "col" = FALSE)
-    secondCard = list("row" = FALSE, "col" = FALSE)
-    playerVals$player1Score <-  0
-    playerVals$player2Score <-  0
+    #reset game
+    gameReset()
   })
   
   #output vals for player names
@@ -96,18 +109,9 @@ shinyServer(function(input, output, session) {
   output$sidebarInstruction <- renderUI(
     if (vals$tabOpen == "MenuTab"){
       fluidPage(
-      tags$h4("Learn how to support how to support your loved ones with mental health concerns!"), 
-      tags$hr(),
-      tags$h5("How to play:"), 
-      tags$ul(
-        tags$li("Each player takes turns to flip any 2 memory cards within 20 seconds."), 
-        tags$li("If the picture on the memory card matches, the player proceed to answer a randomly generated quiz question. Otherwise, the mismatched cards are flipped back and the turn ends. Then, it’s the next player turn to flip any 2 cards."), 
-        tags$li("If the quiz question is answered correctly, the player collects the 2 matching memory cards and scores a point for each card collected. If answered incorrectly, opponent gets the cards and earns points instead."),
-        tags$li("To obtain a chance card, the player must find the matching memory card with the clover symbol in the top right corner."),
-        tags$li("The chance card is randomly selected and it will be effective immediately before the player answers a quiz question."),
-        tags$li("The game ends when all of the memory cards are matched and the player with the most points wins the game.")
+        tags$h4("Welcome!"),
+        actionButton("instructButt", "Instructions")
       )
-      ) 
     }
     else if (vals$tabOpen == "GameTab"){
       if (gameVals$gameState == "PC1") {
@@ -119,6 +123,11 @@ shinyServer(function(input, output, session) {
         #prompt for choices if game state is AQ
         tabPanel("gameInfoDisplay", 
                  paste0(gameVals$playerName, " pick second card."))
+      }
+      else if (gameVals$gameState == "WC") {
+        #prompt for choices if game state is AQ
+        tabPanel("gameInfoDisplay", 
+                 "Cards don't match! Click on any card to end turn")
       }
       else if (gameVals$gameState == "AQ") {
         #retrieve question
@@ -138,22 +147,40 @@ shinyServer(function(input, output, session) {
       }
     })
   
+  #launches instruction modal
+  observeEvent(input$instructButt,{
+    showModal(modalDialog(instructionModal()
+    ))
+  })
+  
   #making image matrix
   renderCell <- function(gridrow,gridcol){
     renderImage({
+      # checks for game completeness on the first cell
+      if (gridrow == 1 & gridcol == 1){
+        # checks if all cards are opened or all questions are answered
+        if (length(gameVals$cardsOpened) == 18 | 
+            length(gameVals$questionsAnswered) == 27){
+          #if (T){ # use this as short cut to check end modal
+          endGame()
+        }
+      }
+      
       row <- toString(gridrow)
       col <- toString(gridcol)
-      card <- gameVals$cardMatrix[[row]][[col]]
       #select the icon appropriate for this cell
+      card <- gameVals$cardMatrix[[row]][[col]]
       
       #show real card if its already opened
       if (card[["open"]]){ #if card is opened
         imgsrc <- paste0("www/patterns/", card["img"])
+        # adds image into cardsOpened list if its not already inside
+        gameVals$cardsOpened <- union(gameVals$cardsOpened, card["img"])
       }
       else{
         #show real card if flipped open by game action
-        if ((gameVals$firstCard[["row"]] == row  && gameVals$firstCard[["col"]] == col) |
-            (gameVals$secondCard[["row"]] == row  && gameVals$secondCard[["col"]] == col)){
+        if ((gameVals$firstCard[["row"]] == row & gameVals$firstCard[["col"]] == col) |
+            (gameVals$secondCard[["row"]] == row & gameVals$secondCard[["col"]] == col)){
           imgsrc <- paste0("www/patterns/", card["img"])
         }
         #show closed card if flipped if its closed
@@ -217,8 +244,21 @@ shinyServer(function(input, output, session) {
     col <- toString(gridcol)
     card <- gameVals$cardMatrix[[row]][[col]]
     
-    #only react if card is closed
-    if (!card[["open"]]){ #ADD: or in openedcard gameval
+    #if state is wrong card
+    if (gameVals$gameState == "WC"){
+      # change state and player
+      gameVals$gameState  <-  "PC1"
+      nextTurn()
+      #Erases first and second card VAR
+      gameVals$firstCard <- list("row" = FALSE, "col" = FALSE)
+      gameVals$secondCard <- list("row" = FALSE, "col" = FALSE)
+      showNotification(paste0("Pick some cards, ", gameVals$playerName))
+    }
+
+    #only react if card is closed (check from matrix and first card opened)
+    else if (!card[["open"]] &
+        !(gameVals$firstCard[["row"]] == row & 
+          gameVals$firstCard[["col"]] == col)){
       
       #if its second card
       if (gameVals$gameState == "PC2"){
@@ -226,31 +266,26 @@ shinyServer(function(input, output, session) {
         gameVals$secondCard <- list("row" = row, "col" = col)
         
         #checks results
-        outcome <- DRAFTcheckCard(gameVals$cardMatrix, gameVals$firstCard, gameVals$secondCard)
+        outcome <- checkCard(gameVals$cardMatrix, gameVals$firstCard, gameVals$secondCard)
         if (outcome[["check"]]){
           #changes game state and updates cardMatrix
           gameVals$gameState  <-  "AQ"
           gameVals$cardMatrixTemp <- outcome[["cardMatrix"]]
           #NOTE: reset first and second row after answering question (see answeringbutt function)
           # show success notification
-          showNotification("Success!")
+          showNotification("Success! Please answer questions in prompt")
         }
         else{
-          #change play state and player
-          gameVals$gameState  <-  "PC1"
-          nextTurn()
-          #Erases first and second card VAR
-          gameVals$firstCard <- list("row" = FALSE, "col" = FALSE)
-          gameVals$secondCard <- list("row" = FALSE, "col" = FALSE)
-          #have some notification come out
-          showNotification(paste0("Cards do not match. Now, switch to ", gameVals$playerName, "'s turn."))
+          #change state to wrong card
+          gameVals$gameState <- "WC"
+          showNotification("Cards don't match. Click on any card to end turn")
         }
         
       }
       #if its first card
       else if (gameVals$gameState == "PC1"){
         #advance to pick second card
-        gameVals$gameState  <-  "PC2"
+        gameVals$gameState <- "PC2"
         gameVals$firstCard <- list("row" = row, "col" = col)
       }
     }
@@ -300,40 +335,60 @@ shinyServer(function(input, output, session) {
   observeEvent(input$click66,{processClickEvent(6,6)})
   
   #process clicks of answerbutton
-  observeEvent(input$answerButt,{##only react if there is input buttons
+  observeEvent(input$answerButt,{##only react if there is input 
     #compares score
-    if (input$answerChoice == gameVals$answerCorrect){
-      #Adds score for player if correct
-      showNotification("That is the correct answer!")
-      if (gameVals$playerTurn == 1){
-        playerVals$player1Score <- playerVals$player1Score + 1
-      }
-      else{
-        playerVals$player2Score <- playerVals$player2Score + 1
-      }
-      #sets open card
-      gameVals$cardMatrix <- gameVals$cardMatrixTemp
+    if (length(input$answerChoice) == 0){
+      #nothing happens if there is no input
     }
     else {
-      #if incorrect, add score of other player
-      showNotification("Wrong answer.")
-      if (gameVals$playerTurn == 1){
-        playerVals$player2Score <- playerVals$player2Score + 1
+      if (input$answerChoice == gameVals$answerCorrect){
+      #Adds score for player if correct
+      showNotification("That is the correct answer!")
+        if (gameVals$playerTurn == 1){
+          playerVals$player1Score <- playerVals$player1Score + 1
+        }
+        else{
+          playerVals$player2Score <- playerVals$player2Score + 1
+        }
+        #sets open card
+        gameVals$cardMatrix <- gameVals$cardMatrixTemp
       }
-      else{
-        playerVals$player1Score <- playerVals$player1Score + 1
+      else {
+        #if incorrect, add score of other player
+        showNotification("Wrong answer.")
+        if (gameVals$playerTurn == 1){
+          playerVals$player2Score <- playerVals$player2Score + 1
+        }
+        else{
+          playerVals$player1Score <- playerVals$player1Score + 1
+        }
       }
+    
+      # advance to answer question and turn
+      nextTurn()
+      gameVals$gameState  <-  "PC1"
+      #Erases first and second card VAR
+      gameVals$firstCard <- list("row" = FALSE, "col" = FALSE)
+      gameVals$secondCard <- list("row" = FALSE, "col" = FALSE)
     }
-    # advance to answer question and turn
-    nextTurn()
-    gameVals$gameState  <-  "PC1"
-    #Erases first and second card VAR
-    gameVals$firstCard <- list("row" = FALSE, "col" = FALSE)
-    gameVals$secondCard <- list("row" = FALSE, "col" = FALSE)
   })
   
   #output vals for player scores
   output$player1Score <- renderUI(as.character(playerVals$player1Score))
   output$player2Score <- renderUI(as.character(playerVals$player2Score))
+  
+  #end game function
+  endGame <- function(){
+    gameVals$gameState <- "EG"
+    showModal(
+      modalDialog(
+        endModal(playerVals$player1Score, playerVals$player1Name, playerVals$player2Score, playerVals$player2Name)
+      )
+    )
+    #hide game tab and switches to menu tab
+    hideTab(inputId = "tabsPanel", target = "GameTab")
+    updateTabsetPanel(session, "tabsPanel", selected = "MenuTab")
+    gameReset()
+  }
   
 })
