@@ -8,6 +8,17 @@ loadPkgs(pkgnames)
 
 # Define UI for random distribution application 
 shinyUI(fluidPage(
+  #notification appears left of screen
+  tags$head(
+    tags$style(
+      HTML(".shiny-notification {
+             position:relative;
+             right: 65vw;
+             }
+             "
+      )
+    )
+  ),
   
   # Application title
   headerPanel("MindMatch"),

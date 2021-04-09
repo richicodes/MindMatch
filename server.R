@@ -39,7 +39,7 @@ shinyServer(function(input, output, session) {
     # EG: end game
     gameState = NULL,
     #action card, if we ever get to that state
-    actionCard = NULL,
+    actionCard = F,
     #stores order of cards, whether if it is opened
     cardMatrix = NULL,
     #stores the order of the cards on the board
@@ -268,15 +268,63 @@ shinyServer(function(input, output, session) {
         #checks results
         outcome <- checkCard(gameVals$cardMatrix, gameVals$firstCard, gameVals$secondCard)
         if (outcome[["check"]]){
-          #changes game state and updates cardMatrix
-          gameVals$gameState  <-  "AQ"
-          gameVals$cardMatrixTemp <- outcome[["cardMatrix"]]
           #NOTE: reset first and second row after answering question (see answeringbutt function)
-          # show success notification
-          showNotification("Success! Please answer questions in prompt")
+          #check for action card
+          if (outcome[["action"]]){
+            gameVals$actionCard <- sample(c("Skip", "Together", "Bonus"), 1)
+            if (gameVals$actionCard == "Skip"){
+              # show skip notification
+              showNotification("You have picked a skip action card! Your turn is skipped!", type = "warning")
+              # updates cardMatrix directly
+              gameVals$cardMatrix <- outcome[["cardMatrix"]]
+              # change state and player
+              gameVals$gameState  <-  "PC1"
+              nextTurn()
+              #Erases first, second card, and Bonus card VAR
+              gameVals$firstCard <- list("row" = FALSE, "col" = FALSE)
+              gameVals$secondCard <- list("row" = FALSE, "col" = FALSE)
+              showNotification(paste0("Pick some cards, ", gameVals$playerName))
+              gameVals$actionCard <- F
+            }
+            else if (gameVals$actionCard == "Bonus"){
+              # show bonus notification
+              showNotification("You have picked a Bonus action card! Free points for you!", type = "warning")
+              #give player points
+              if (gameVals$playerTurn == 1){
+                playerVals$player1Score <- playerVals$player1Score + 1
+              }
+              else{
+                playerVals$player2Score <- playerVals$player2Score + 1
+              }
+              # updates cardMatrix directly
+              gameVals$cardMatrix <- outcome[["cardMatrix"]]
+              # change state and player
+              gameVals$gameState  <-  "PC1"
+              nextTurn()
+              #Erases first, second card, and Bonus card VAR
+              gameVals$firstCard <- list("row" = FALSE, "col" = FALSE)
+              gameVals$secondCard <- list("row" = FALSE, "col" = FALSE)
+              showNotification(paste0("Pick some cards, ", gameVals$playerName))
+              gameVals$actionCard = F
+            }
+            else if (gameVals$actionCard == "Bonus"){
+              # show success notification
+              showNotification("You have picked an Answer Together action card! Please answer questions in prompt", type = "warning")
+              #changes game state and updates cardMatrix
+              gameVals$gameState  <-  "AQ"
+              gameVals$cardMatrixTemp <- outcome[["cardMatrix"]]
+            }
+          }
+          else{
+            # show success notification
+            showNotification("Success! Please answer questions in prompt")
+            #changes game state and updates cardMatrix
+            gameVals$gameState  <-  "AQ"
+            gameVals$cardMatrixTemp <- outcome[["cardMatrix"]]
+          }
         }
         else{
-          #change state to wrong card
+          #if cards don't match, change state to wrong card
           gameVals$gameState <- "WC"
           showNotification("Cards don't match. Click on any card to end turn")
         }
@@ -344,23 +392,44 @@ shinyServer(function(input, output, session) {
       if (input$answerChoice == gameVals$answerCorrect){
       #Adds score for player if correct
       showNotification("That is the correct answer!")
-        if (gameVals$playerTurn == 1){
+        #checks for bonus card
+        if (gameVals$actionCard == "Bonus"){
           playerVals$player1Score <- playerVals$player1Score + 1
+          playerVals$player2Score <- playerVals$player2Score + 1
+          #reset bonus card
+          gameVals$actionCard <- F
         }
         else{
-          playerVals$player2Score <- playerVals$player2Score + 1
+        #assigns points if there is no action card
+          if (gameVals$playerTurn == 1){
+            playerVals$player1Score <- playerVals$player1Score + 1
+          }
+          else{
+            playerVals$player2Score <- playerVals$player2Score + 1
+          }
         }
         #sets open card
         gameVals$cardMatrix <- gameVals$cardMatrixTemp
+        gameVals$cardMatrixTemp <- NULL
       }
       else {
         #if incorrect, add score of other player
         showNotification("Wrong answer.")
-        if (gameVals$playerTurn == 1){
-          playerVals$player2Score <- playerVals$player2Score + 1
+        #checks for bonus card
+        if (gameVals$actionCard == "Bonus"){
+          playerVals$player1Score <- playerVals$player1Score - 1
+          playerVals$player2Score <- playerVals$player2Score - 1
+          #reset bonus card
+          gameVals$actionCard <- F
         }
         else{
-          playerVals$player1Score <- playerVals$player1Score + 1
+          #assigns points if there is no action card
+          if (gameVals$playerTurn == 1){
+            playerVals$player2Score <- playerVals$player2Score + 1
+          }
+          else{
+            playerVals$player1Score <- playerVals$player1Score + 1
+          }
         }
       }
     
