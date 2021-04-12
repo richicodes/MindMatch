@@ -53,10 +53,10 @@ shinyServer(function(input, output, session) {
     #stores answer
     answerCorrect = NULL, 
     #stores cards that are opened
-    cardsOpened = c()
+    cardsOpened = c(),
+    #proportion of cards completed
+    gameProgress = 0
     )
-  
-  questionvals <- reactiveValues(question = NULL) #TBC
   
   #determine next turn
   nextTurn <- function(){
@@ -82,6 +82,7 @@ shinyServer(function(input, output, session) {
     gameVals$gameState <- "PC1"
     gameVals$questionsAnswered <- c()
     gameVals$cardsOpened <- c()
+    gameVals$gameProgress <- 0
     firstCard = list("row" = FALSE, "col" = FALSE)
     secondCard = list("row" = FALSE, "col" = FALSE)
     playerVals$player1Score <-  0
@@ -104,6 +105,9 @@ shinyServer(function(input, output, session) {
   #output vals for player names
   output$player1Name <- renderUI(playerVals$player1Name)
   output$player2Name <- renderUI(playerVals$player2Name)
+  
+  #output for game progress
+  output$gameProgress <- renderUI(tags$b(paste0("Game progress: ", gameVals$gameProgress*100, "%")))
   
   #output for side panel
   output$sidebarInstruction <- renderUI(
@@ -159,7 +163,9 @@ shinyServer(function(input, output, session) {
       # checks for game completeness on the first cell
       if (gridrow == 1 & gridcol == 1){
         # checks if all cards are opened or all questions are answered
-        if (length(gameVals$cardsOpened) == 18 | 
+        noCardsOpened <- length(gameVals$cardsOpened)
+        gameVals$gameProgress <- noCardsOpened/input$gameSize
+        if ( gameVals$gameProgress >= 1 | 
             length(gameVals$questionsAnswered) == 27){
           #if (T){ # use this as short cut to check end modal
           endGame()

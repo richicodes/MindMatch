@@ -6,7 +6,7 @@ pkgnames <- c("shiny")
 # Use our custom load function
 loadPkgs(pkgnames)
 
-# Define UI for random distribution application 
+
 shinyUI(fluidPage(
   #notification appears left of screen
   tags$head(
@@ -40,6 +40,9 @@ shinyUI(fluidPage(
                #fields to enter name
                textInput("player1Name", "Player 1", placeholder = "Input Player 1 name here"),
                textInput("player2Name", "Player 2", placeholder = "Input Player 2 name here"),
+               #slider to vary how long they want to play the game
+               sliderInput("gameSize", "Image pair to match before game ends:",
+                           min = 1, max = 18, value = 18),
                #submission button
                actionButton("startButt", "Start game!")
                ), 
@@ -48,6 +51,7 @@ shinyUI(fluidPage(
                htmlOutput("player1Score"),
                htmlOutput("player2Name"),
                htmlOutput("player2Score"),
+               htmlOutput("gameProgress"), 
                
                #to add a background image for the grid:
                # the trick here is to make the gameboard image 'position:absolute;z-order:0'; 
