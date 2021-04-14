@@ -1,7 +1,7 @@
 #outputs instruction modal
-instructionModal <- function(){
+resourcesModal <- function(){
   modal <- fluidPage(
-    tags$h4("Learn how to support how to support your loved ones with mental health concerns!"), 
+    tags$h4("This is the resources page"), 
     tags$hr(),
     tags$h5("How to play:"), 
     tags$ul(

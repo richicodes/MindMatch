@@ -3,6 +3,8 @@ source("usePackages.R")
 source("cardmatrix.R")
 source("questions.R")
 source("instructionModal.R")
+source("descriptionModal.R")
+source("resourcesModal.R")
 source("endModal.R")
 
 # Name of the packages 
@@ -114,7 +116,9 @@ shinyServer(function(input, output, session) {
     if (vals$tabOpen == "MenuTab"){
       fluidPage(
         tags$h4("Welcome!"),
-        actionButton("instructButt", "Instructions")
+        actionButton("instructButt", "Instructions"),
+        actionButton("descriptionButt", "Description"),
+        actionButton("resourcesButt", "Resources")
       )
     }
     else if (vals$tabOpen == "GameTab"){
@@ -154,6 +158,16 @@ shinyServer(function(input, output, session) {
   #launches instruction modal
   observeEvent(input$instructButt,{
     showModal(modalDialog(instructionModal()
+    ))
+  })
+  
+  observeEvent(input$descriptionButt,{
+    showModal(modalDialog(descriptionModal()
+    ))
+  })
+  
+  observeEvent(input$resourcesButt,{
+    showModal(modalDialog(resourcesModal()
     ))
   })
   
