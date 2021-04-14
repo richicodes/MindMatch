@@ -115,9 +115,13 @@ shinyServer(function(input, output, session) {
   output$sidebarInstruction <- renderUI(
     if (vals$tabOpen == "MenuTab"){
       fluidPage(
-        tags$h4("Welcome!"),
+        img(src = "Mindmatchlogo.png", height = 75, width = 150 ),
+        tags$hr(),
+        tags$h5("About our game:"),
+        tags$p("MindMatch is a memory-quiz game that aims to help reduce mental health stigmatisation by spreading awareness about the common struggles people with mental health issues face and teach us ways that we can support them. "),
         actionButton("instructButt", "Instructions"),
-        actionButton("descriptionButt", "Description"),
+        tags$br(),
+        #actionButton("descriptionButt", "Description"),
         actionButton("resourcesButt", "Resources")
       )
     }
