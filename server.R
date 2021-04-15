@@ -3,7 +3,6 @@ source("usePackages.R")
 source("cardmatrix.R")
 source("questions.R")
 source("instructionModal.R")
-source("descriptionModal.R")
 source("resourcesModal.R")
 source("endModal.R")
 
@@ -121,7 +120,6 @@ shinyServer(function(input, output, session) {
         tags$p("MindMatch is a memory-quiz game that aims to help reduce mental health stigmatisation by spreading awareness about the common struggles people with mental health issues face and teach us ways that we can support them. "),
         actionButton("instructButt", "Instructions"),
         tags$br(),
-        #actionButton("descriptionButt", "Description"),
         actionButton("resourcesButt", "Resources")
       )
     }
@@ -162,11 +160,6 @@ shinyServer(function(input, output, session) {
   #launches instruction modal
   observeEvent(input$instructButt,{
     showModal(modalDialog(instructionModal()
-    ))
-  })
-  
-  observeEvent(input$descriptionButt,{
-    showModal(modalDialog(descriptionModal()
     ))
   })
   
