@@ -1,17 +1,46 @@
-#outputs instruction modal
+#outputs resources modal
 resourcesModal <- function(){
   modal <- fluidPage(
-    tags$h4("This is the resources page"), 
+    tags$h4("Here are some resources to learn more about mental health:"), 
+    
     tags$hr(),
-    tags$h5("How to play:"), 
+    tags$h5("Helplines and Available Services in Singapore"),
     tags$ul(
-      tags$li("Each player takes turns to flip any 2 memory cards within 20 seconds."), 
-      tags$li("If the picture on the memory card matches, the player proceed to answer a randomly generated quiz question. Otherwise, the mismatched cards are flipped back and the turn ends. Then, it’s the next player's turn to flip any 2 cards."), 
-      tags$li("If the quiz question is answered correctly, the player collects the 2 matching memory cards and scores a point for each card collected. If answered incorrectly, opponent gets the cards and earns points instead."),
-      tags$li("To obtain a chance card, the player must find the matching coloured memory card."),
-      tags$li("If the player chooses matching chance cards, a chance action is randomly selected and it will be effective immediately before the player answers a quiz question."),
-      tags$li("The game ends when all of the memory cards are matched and the player with the most points wins the game.")
+      tags$li(tags$a(href="https://www.ncss.gov.sg/NCSS/media/NCSS-Documents-and-Forms/NCSS%20Internal%20Documents/Directory-on-Mental-Health-Services.pdf", "Mental Health Services Resource Directory"))
+    ),
+    
+    tags$br(),
+    tags$h5("Resources for Depression"),
+    tags$ul(
+      tags$li(tags$a(href="https://www.uofmhealth.org/health-library/ug4843", "Myths and Facts about Depression")),
+      tags$li(tags$a(href="https://www.mayoclinic.org/diseases-conditions/depression/in-depth/depression/art-20045943", "Supporting a Family Member or Friend with Depression"))
+    ),
+    
+    tags$br(),
+    tags$h5("Resources for Anxiety"),
+    tags$ul(
+      tags$li(tags$a(href="https://www.banyanmentalhealth.com/2018/08/02/common-misconceptions-about-anxiety-disorders/", "Common Misconceptions about Anxiety Disorders")),
+      tags$li(tags$a(href="https://www.hopkinsmedicine.org/health/treatment-tests-and-therapies/how-to-help-someone-with-anxiety", "How to Help Someone with Anxiety"))
+    ),
+    
+    tags$br(),
+    tags$h5("Resources for Eating Disorders"),
+    tags$ul(
+      tags$li(tags$a(href="https://www.aware.org.sg/information/eating-disorders/", "Information about Eating Disorders")),
+      tags$li(tags$a(href="https://www.nationaleatingdisorders.org/toolkit/parent-toolkit/eating-disorder-myths", "Eating Disorder Myths")),
+      tags$li(tags$a(href="https://au.reachout.com/articles/how-to-help-a-friend-with-an-eating-disorder", "How to Help a Friend with an Eating Disorder"))
     )
   ) 
   return(modal)
 }
+
+
+
+
+
+
+
+
+
+
+
