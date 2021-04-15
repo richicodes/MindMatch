@@ -1,6 +1,9 @@
 #outputs resources modal
 resourcesModal <- function(){
   modal <- fluidPage(
+    img(src="mentalhealth.jpg", height = "50%", width = "50%", style="display: block; margin-left: auto; margin-right: auto;", alt="found on google"),
+    tags$h6(tags$a(href="https://api.hub.jhu.edu/factory/sites/default/files/styles/soft_crop_2400/public/mental_health_040620.jpg?itok=eObhgWGI", "image credit"), align="center"), 
+  
     tags$h4("Here are some resources to learn more about mental health:"), 
     
     tags$hr(),
