@@ -6,8 +6,19 @@ pkgnames <- c("shiny")
 # Use our custom load function
 loadPkgs(pkgnames)
 
-# Define UI for random distribution application 
+
 shinyUI(fluidPage(
+  #notification appears left of screen
+  tags$head(
+    tags$style(
+      HTML(".shiny-notification {
+             position:relative;
+             right: 65vw;
+             }
+             "
+      )
+    )
+  ),
   
   # Application title
   headerPanel("MindMatch"),
@@ -25,18 +36,22 @@ shinyUI(fluidPage(
     tabsetPanel(
       id = "tabsPanel", #for identification of which tab is open
       tabPanel("Menu", value = "MenuTab", 
-               "Please enter the names",
+               "Please enter your names.",
                #fields to enter name
-               textInput("player1Name", "Player 1 name", "Player1"),
-               textInput("player2Name", "Player 2 name", "Player2"),
+               textInput("player1Name", "Player 1", placeholder = "Input Player 1 name here"),
+               textInput("player2Name", "Player 2", placeholder = "Input Player 2 name here"),
+               #slider to vary how long they want to play the game
+               sliderInput("gameSize", "Image pair to match before game ends:",
+                           min = 1, max = 18, value = 18),
                #submission button
-               actionButton("startButt", "Start a new game!")
+               actionButton("startButt", "Start game!")
                ), 
       tabPanel("Game", value = "GameTab",
                htmlOutput("player1Name"),
                htmlOutput("player1Score"),
                htmlOutput("player2Name"),
                htmlOutput("player2Score"),
+               htmlOutput("gameProgress"), 
                
                #to add a background image for the grid:
                # the trick here is to make the gameboard image 'position:absolute;z-order:0'; 
@@ -86,7 +101,7 @@ shinyUI(fluidPage(
                imageOutput("cell65",height="100px",width="100px",click="click65",inline=TRUE), # height and width are for the containing div, not the image itself
                imageOutput("cell66",height="100px",width="100px",click="click66",inline=TRUE),  # height and width are for the containing div, not the image itself
                
-               p("Illustration by Tan Yunyi")
+               p("Illustration by itim2101 from flaticon.com")
                )
       )
       
