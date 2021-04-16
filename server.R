@@ -141,7 +141,7 @@ shinyServer(function(input, output, session) {
       }
       else if (gameVals$gameState == "AQ") {
         #retrieve question
-        questionOut <- DRAFTquestionRetrieve(gameVals$questionsAnswered)
+        questionOut <- questionRetrieve(gameVals$questionsAnswered)
         #sets correct value for answer and updates questions answered
         gameVals$questionsAnswered <- questionOut[["answered_questions_updated"]]
         gameVals$answerCorrect <- questionOut[["correct_option_index"]]
