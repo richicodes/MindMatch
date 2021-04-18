@@ -45,7 +45,7 @@ checkAction <- function(imgname){
 generateMatrix <- function(){
   cardBoard <- sample(list.files(path = "www/patterns/", pattern = "png$"), 18)
   cardBoard <- sample(rep(cardBoard, 2))
-  for debugging
+  # for debugging
   #print(cardBoard)
   
   # trying to create a for loop but not too sure how
