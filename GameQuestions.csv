@@ -1,43 +1,43 @@
-questionID,question,a,b,c,d,correct_option_index
-1,Which one of the following is NOT a type of depression?,Major depressive disorder,Psychotic depression ,Persistent depressive disorder,Serious depressive disorder ,4
-2,Which of the following is NOT a symptom of depression?,Fatigue,"Persistent sad, anxious or ""empty"" mood",Moving or talking more slowly,Hyperventilation,4
-3,"If you experience __ or more depressive symptoms for more than __ two weeks, it is a possible indication of depressive disorder","3,4","5,4","3,2","5,2",4
-4,Choose the correct response to support someone with depression,"""You should try harder.""","""Everyone goes through tough times.""","""But you don't seem sad!""","""How can I help you?""",4
-5,What causes depression?,Personal/ family history of depression,"Major life changes, trauma or stress",Certain physical illnesses and medications ,All of the above,4
-6,Which statement is a myth?,Depression will get better by itself,Depression only happens if something bad happens to you ,People who can't get over depression are weaker in character,All of the above ,4
-7,Which is not a treatment for depression? ,Psychotheraphy,Taking supplements,Exercise,Taking medication,2
-8,Which is not a warning sign of suicide?,Having mood swings,Binge eating,Giving away belongings or getting affairs in order when there is no logical reason to,Wanting to be left alone,2
-9,What can you do if your friend of family member resists getting help,Suggest a general check-up with a physician,Offer to help them find a doctor/therapist and go with them on the first visit,Call a mental health helpline,All of the above ,4
-10,How prevalent are anxiety disorders in Singapore?,about 0.1%,about 1%,about 3%,about 5%,3
-11,Which age group is anxiety disorders prevalent in?,Children & Teenagers,Adults,Older Adults,All options,4
-12,Which statement is true about having anxiety disorders?,anxiety disorders causes feelings of distress and fear with no apparent reason.,Anxiety attacks can cause fainting.,Suppressing anxious thoughts is a solution to anxiety disorders.,Less stress will cure anxiety disorders.,1
-13,"Which of the following are some symptoms of anxiety disorders:
+questionID,question,a,b,c,d,correct_option_index,,,,,,
+1,Which one of the following is NOT a type of depression?,Major depressive disorder,Psychotic depression ,Persistent depressive disorder,Serious depressive disorder ,4,,,,,,
+2,Which of the following is NOT a symptom of depression?,Fatigue,"Persistent sad, anxious or ""empty"" mood",Moving or talking more slowly,Hyperventilation,4,,,,,,
+3,"If you experience __ or more depressive symptoms for more than __ weeks, it is a possible indication of depressive disorder.","3, 4","5, 4","3, 2","5, 2",4,,,,,,
+4,Choose the correct response to support someone with depression:,"""You should try harder.""","""How can I help you?""","""But you don't seem sad!""","""Everyone goes through tough times.""",2,,,,,,
+5,What causes depression?,Personal / family history of depression,"Major life changes, trauma or stress",Certain physical illnesses and medications ,All of the above,4,,,,,,
+6,Which statement is a myth?,Depression will get better by itself,Depression only happens if something bad happens to you ,People who can't get over depression are weaker in character,All of the above ,4,,,,,,
+7,Which is not a treatment for depression? ,Psychotheraphy,Taking supplements,Exercise,Taking medication,2,,,,,,
+8,Which is not a warning sign of suicide?,Having mood swings,Binge eating,Giving away belongings or getting affairs in order when there is no logical reason to,Wanting to be left alone,2,,,,,,
+9,What can you do if your friend of family member resists getting help?,Suggest a general check-up with a physician,Offer to help them find a doctor/therapist and go with them on the first visit,Call a mental health helpline,All of the above ,4,,,,,,
+10,How prevalent are anxiety disorders in Singapore?,about 0.1%,about 1%,about 3%,about 5%,3,,,,,,
+11,Which age group is anxiety disorders prevalent in?,Children & Teenagers,Adults,Older Adults,All options,4,,,,,,
+12,Which statement is true about having anxiety disorders?,Suppressing anxious thoughts is a solution to anxiety disorders,Anxiety attacks can cause fainting,Anxiety disorders causes feelings of distress and fear with no apparent reason,Having less stress will cure anxiety disorders,3,,,,,,
+13,"Which of the following are symptoms of anxiety disorders:
 1. fleeting anxious feelings
 2. racing heart
 3. rapid breathing
-4. excessive worrying",1&4,"2,3&4","1,3&4","1,2,3&4",2
-14,How do you identify someone with anxiety disorder(s)?,Feeling edgy and/or restless,All options,Persistent belief in the worst outcome happening,Avoidance of feared situations or events,2
-15,What action should you avoid while interacting with someone who is suffering from anxiety disorder(s)?,Eliminate the cause of their concern,Advise them to seek professional help,Express concern for them,Provide validation to their fears,1
-16,What should you say to someone with anxiety disorder(s)?,"""It's not a big deal.""","""Stop worrying.""","""I am here for you.""","""Have you tried meditation / yoga / etc?""",3
-17,What should you not do to prevent anxiety disorders?,Incorporate stress reduction activities in your daily life,Eating a healthy diet,Consume caffeine / alcohol as stress relievers,Exercise,3
+4. excessive worrying",1 & 4,"2, 3 & 4","1, 3 & 4","1, 2, 3 & 4",2,,,,,,
+14,How do you identify someone with anxiety disorder(s)?,Feeling edgy and/or restless,All options,Persistent belief in the worst outcome happening,Avoidance of feared situations or events,2,,,,,,
+15,What action should you avoid while interacting with someone who is suffering from anxiety disorder(s)?,Express concern for them,Advise them to seek professional help,Eliminate the cause of their concern,Provide validation to their fears,3,,,,,,
+16,What should you say to someone with anxiety disorder(s)?,"""It's not a big deal.""","""Stop worrying.""","""I am here for you.""","""Have you tried meditation / yoga / etc?""",3,,,,,,
+17,What should you not do to prevent anxiety disorders?,Incorporate stress reduction activities in your daily life,Eating a healthy diet,Consume caffeine / alcohol as stress relievers,Exercise,3,,,,,,
 18,"How does someone get better from anxiety disorders?
 1. Counselling / Therapy
 2. Medication
-3. Managing anxiety disorders symptoms","1,2&3",1,2,1&2,1
-19,Who is generally affected by body Image?,Older Women,Young Men,Young Women & Teenagers,Anyone,4
-20,Being Body Positive Means,Always feeling happy about your body,Learning to accept and understand your body that everyone is different,Judging other poeple based on body size,Always keeping fit and hitting the Gym,2
-21,What is an inapropiate way to support a friend who faces body image issues?,Constantly discuss Diet Plans and thier body type,Set an example and Practice Self-acceptance,Be honest and talk openly,Be proactive and research for resources that might benefit them,1
-22,What should be avoided when approaching someone with body image issues,Understand their boundaries,Encourage and build them up,Be patient and actively listen ,Make them Eat / Exercise,4
-23,What to NOT say to a friend who hates her body,Compliment them for things other than their looks,Help her see the reality of beauty expectations,Join the negative discussion to make them feel better,Actively discuss their concerns,3
-24,How to identify someone with body image issues? This person may...,compare themselves with others and feel inadequate when doing so,"feel ashamed or embarrassed by their body, lack confidence",feel uncomfortable or awkward in their body,All of the above,4
-25,What causes eating disoders,Depression,Unhealthy perceptions about body image,Obsessive complusive disorder,All of the above,4
-26,"I/Someone I know has an eating disorder, what should you avoid to help them?",Helplines,Support Groups,Counselling,Become their Counsellors,4
-27,What can I do to prevent an eating disorder?,Learn about healthy eating and an active lifestyle from the right sources,Reassure and reaffirm your friend constantly,Be a positive influence yourself.,All of the above,4
-28,Mental Health Illness is,"Very common, and affects both the sufferer and the people around them","Rare, and I will not be affected","Contagious, hence I need to avoid people with mental health condition","Genetic in nature, I can only get it if I got the relavent genes.",1
-29,Which of the following does not contribute to development of mental health problem?,Character flaws or personality weakness,"Biological, e.g. genetics and chronic disease","Social Factors, e.g. interactions with other people","Psychological, e.g. innate behaviour of a person",1
-30,People with mental health illness,Are highly active and productive members of society,Are violent and unpredictable,Are passive and lazy,Are scheming and manipulative,1
-31,Should people with mental health have jobs?,"Yes, because they can contribute as well as others","Yes, because we cannot give them a free lunch.","No, because they might disrupt the work of others","No, because they can spread their mental illness",1
-32,The most effective mental health treatment,Depends on the condition and circumstance of the patient,Therapy and counselling,Medication given by the doctor,Surgery,1
-33,I can help a person with mental health,"Is not difficult, and there are many ways of doing it, like being an advocate or giving them a listening ear",Only if I am a trained professional,Only if I am a really close friend or relative,Not advisable unless I really do not have a choice,1
-34,Can mental health be cured?,"Yes, but it will take some time","Yes, once the suffers know how silly their ideas are","No, patients can only manage their symptoms","No, it cannot be undone.",1
-35,Which of the following groups are not susceptible to mental health illness?,Everyone is vulnerable,Children,The elderly,Successful people,1
+3. Managing anxiety disorders symptoms",2,1,"1, 2 & 3",1 & 2,3,,,,,,
+19,Who is generally affected by having body image?,Older Women,Young Men,Young Women & Teenagers,Anyone,4,,,,,,
+20,Being Body Positive means:,Always feeling happy about your body,Learning to accept and understand your body that everyone is different,Judging other people based on body size,Always keeping fit and hitting the Gym,2,,,,,,
+21,What is an inappropiate way to support a friend who faces body image issues?,Constantly discuss diet plans and their body type,Set an example and practice Self-acceptance,Be honest and talk openly,Be proactive and research for resources that might benefit them,1,,,,,,
+22,What should be avoided when approaching someone with body image issues?,Understand their boundaries,Make them eat / Exercise,Be patient and listen actively ,Encourage and build them up,2,,,,,,
+23,What to NOT say to a friend who hates her body?,Compliment them for things other than their looks,Help them see the reality of beauty expectations,Join the negative discussion to make them feel better,Actively discuss their concerns,3,,,,,,
+24,How to identify someone with body image issues? This person may:,Compare themselves with others and feel inadequate when doing so,"Feel ashamed or embarrassed by their body, lack confidence",Feel uncomfortable or awkward in their body,All of the above,4,,,,,,
+25,What causes eating disorders?,Depression,Unhealthy perceptions about body image,Obsessive complusive disorder,All of the above,4,,,,,,
+26,"Someone I know has an eating disorder, what should you avoid to help them?",Helplines,Become their Counsellors,Counselling,Support Groups,2,,,,,,
+27,What can I do to prevent an eating disorder?,Learn about healthy eating and an active lifestyle from the right sources,Reassure and reaffirm your friend constantly,Be a positive influence yourself,All of the above,4,,,,,,
+28,Mental health illness is:,"Contagious, hence I need to avoid people suffering from mental health conditions","Rare, and I will not be affected","Very common, and affects both the sufferer and the people around them","Genetic in nature, I can only get it if I got the relavent genes",3,,,,,,
+29,Which of the following does not contribute to development of mental health problems?,Character flaws or personality weakness,"Biological, e.g. genetics and chronic disease","Social factors, e.g. interactions with other people","Psychological, e.g. innate behaviour of a person",1,,,,,,
+30,People with mental health illness:,Are highly active and productive members of society,Are violent and unpredictable,Are passive and lazy,Are scheming and manipulative,1,,,,,,
+31,Should people with mental health illnesses be employed?,"Yes, because they can contribute as well as others","Yes, because we cannot give them a free lunch","No, because they might disrupt the work of others","No, because they can spread their mental illness to others",1,,,,,,
+32,The most effective mental health treatment is:,Depends on the condition and circumstance of the patient,Therapy and counselling,Medication given by the doctor,Surgery,1,,,,,,
+33,I should help a person with mental health illness.,"It is not difficult, and there are many ways of doing it, like being an advocate or giving them a listening ear",Only if I am a trained professional,Only if I am a really close friend or relative,Not advisable unless I really do not have a choice,1,,,,,,
+34,Can mental health illnesses be cured?,"Yes, but it will take some time","Yes, once the sufferers know how silly their ideas are","No, patients can only manage their symptoms","No, it cannot be undone",1,,,,,,
+35,Which of the following groups are not susceptible to mental health illnesses?,Everyone is vulnerable,Children,The elderly,Successful people,1,,,,,,
