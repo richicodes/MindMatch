@@ -1,5 +1,6 @@
 # Execute our custom script for loading packages
 source("usePackages.R")
+source("setAWSPassword.R")
 source("cardmatrix.R")
 source("questions.R")
 source("instructionModal.R")
@@ -30,8 +31,10 @@ shinyServer(function(input, output, session) {
   gameVals <- reactiveValues(
     #whose turn is it; 1 or 2, representing player 1 or 2
     playerTurn = NULL,
+    
     #name of player in turn
     playerName = NULL,
+    
     #game state (e.g. is it to pick card or answer question)
     # PC1: pick first card
     # PC2: pick second card
@@ -39,22 +42,31 @@ shinyServer(function(input, output, session) {
     # AQ: answer question
     # EG: end game
     gameState = NULL,
+    
     #action card, if we ever get to that state
     actionCard = F,
+    
     #stores order of cards, whether if it is opened
     cardMatrix = NULL,
+    
     #stores the order of the cards on the board
     cardMatrixTemp = NULL,
+    
     #stores the first unflipped card
     firstCard = list("row" = FALSE, "col" = FALSE),
+    
     #stores the second unflipped card
     secondCard = list("row" = FALSE, "col" = FALSE),
+    
     #stores questions that are answered
     questionsAnswered = c(),
+    
     #stores answer
     answerCorrect = NULL, 
+    
     #stores cards that are opened
     cardsOpened = c(),
+    
     #proportion of cards completed
     gameProgress = 0
     )
@@ -142,9 +154,12 @@ shinyServer(function(input, output, session) {
       else if (gameVals$gameState == "AQ") {
         #retrieve question
         questionOut <- questionRetrieve(gameVals$questionsAnswered)
+        print(questionOut)
+        
         #sets correct value for answer and updates questions answered
         gameVals$questionsAnswered <- questionOut[["answered_questions_updated"]]
         gameVals$answerCorrect <- questionOut[["correct_option_index"]]
+        
         #prompt for choices if game state is AQ
         tabPanel("gameInfoDisplay",
                  paste0(gameVals$playerName, " answer this question"),
