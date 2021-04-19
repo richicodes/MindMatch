@@ -142,7 +142,6 @@ shinyServer(function(input, output, session) {
       )
     }
     else if (vals$tabOpen == "GameTab"){
-      print("STOP BYEBYE")
       if (gameVals$gameState == "PC1") {
         #prompt for choices if game state is AQ
         tabPanel("gameInfoDisplay", 
@@ -348,7 +347,7 @@ shinyServer(function(input, output, session) {
               showNotification(paste0("Pick some cards, ", gameVals$playerName))
               gameVals$actionCard = F
             }
-            else if (gameVals$actionCard == "Bonus"){
+            else if (gameVals$actionCard == "Together"){
               # show success notification
               showNotification("You have picked an Answer Together action card! Please answer questions in prompt", type = "warning")
               #changes game state and updates cardMatrix
@@ -436,7 +435,7 @@ shinyServer(function(input, output, session) {
       #Adds score for player if correct
       showNotification("That is the correct answer!")
         #checks for bonus card
-        if (gameVals$actionCard == "Bonus"){
+        if (gameVals$actionCard == "Together"){
           playerVals$player1Score <- playerVals$player1Score + 1
           playerVals$player2Score <- playerVals$player2Score + 1
           #reset bonus card
@@ -459,7 +458,7 @@ shinyServer(function(input, output, session) {
         #if incorrect, add score of other player
         showNotification(paste0("The choice was not correct. The correct choice was ", gameVals$answerCorrectText, "."))
         #checks for bonus card
-        if (gameVals$actionCard == "Bonus"){
+        if (gameVals$actionCard == "Together"){
           playerVals$player1Score <- playerVals$player1Score - 1
           playerVals$player2Score <- playerVals$player2Score - 1
           #reset bonus card
