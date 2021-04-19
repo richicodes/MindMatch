@@ -8,7 +8,7 @@
 # list(questionID, question, options, correct_option_index, answered_questions_updated)
 
 # Name of the packages 
-pkgnames3 <- c("DBI", "RSQLite", "RMySQL", "dbplyr", "glue")
+pkgnames3 <- c("DBI",  "RMySQL", "glue")
 # Use our custom load function
 loadPkgs(pkgnames3)
 
