@@ -2,9 +2,9 @@
 source("usePackages.R")
 
 # Name of the packages 
-pkgnames <- c("shiny")
+pkgnames2 <- c("shiny")
 # Use our custom load function
-loadPkgs(pkgnames)
+loadPkgs(pkgnames2)
 
 
 shinyUI(fluidPage(

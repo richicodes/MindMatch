@@ -7,91 +7,59 @@
 # #### output:
 # list(questionID, question, options, correct_option_index, answered_questions_updated)
 
-library(DBI)
-library(RSQLite)
-library(RMySQL)
-library(dbplyr)
+# Name of the packages 
+pkgnames3 <- c("DBI", "RSQLite", "RMySQL", "dbplyr", "glue")
+# Use our custom load function
+loadPkgs(pkgnames3)
 
-
-
-getAWSConnection <- function(){
-  conn <- dbConnect(
+sqlQuery <- function (query) {
+  # creating DB connection object with RMysql package
+  #query = "SELECT * FROM RandomQuestion"
+  DB <- dbConnect(
     drv = RMySQL::MySQL(),
     dbname = "student071",
     host = "esddbinstance-1.ceo4ehzjeeg0.ap-southeast-1.rds.amazonaws.com",
     username = "student071",
-    password = getOption("AWSPassword"))
-  conn
+    password = "YttS3FxB")
+    # close db connection after function call exits
+  on.exit(dbDisconnect(DB))
+    # send Query to obtain result set
+  rs <- dbSendQuery(DB, query)
+    # get elements from result sets and convert to dataframe
+  result <- fetch(rs, -1)
+  killDbConnections <- function () {
+    all_cons <- dbListConnections(MySQL())
+    print(all_cons)
+    for(con in all_cons)
+      +  dbDisconnect(con)
+    print(paste(length(all_cons), " connections killed."))
   }
+  # return the dataframe
+  return(result)
+}
 
-# sqlQuery <- function (query) {
-#   # creating DB connection object with RMysql package
-#   conn <- getAWSConnection()
-#   
-#   dbDisconnect(conn)
-#   
-#   DB <- dbConnect(
-#     drv = RMySQL::MySQL(),
-#     dbname = "student071",
-#     host = "esddbinstance-1.ceo4ehzjeeg0.ap-southeast-1.rds.amazonaws.com",
-#     username = "student071",
-#     password = getOption("AWSPassword"))
-#     # close db connection after function call exits
-#   on.exit(dbDisconnect(DB))
-#     # send Query to obtain result set
-#   rs <- dbSendQuery(DB, query)
-#     # get elements from result sets and convert to dataframe
-#   result <- fetch(rs, -1)
-#   killDbConnections <- function () {
-#     all_cons <- dbListConnections(MySQL())
-#     print(all_cons)
-#     for(con in all_cons)
-#       +  dbDisconnect(con)
-#     print(paste(length(all_cons), " connections killed."))
-#   }
-#   # return the dataframe
-#   return(result)
-# }
-
-getQuestions <- function(){
+questionRetrieve <- function(answered_questions){
   #open the connection
-  conn <- getAWSConnection()
-  query <- "SELECT * FROM GameQuestions"
-  result <- dbGetQuery(conn, query)
-  dbDisconnect(conn)
-  result
-}
-
-
-questionRetrieve <- function(questionsAnswered){
-  questionData <- getQuestions()
-  allQuestions <- c(1:35)
-  
-  questionsNotAnswered <- 0
-  
-  # check if questionsAnswered is null
-  if (is.null(questionsAnswered)){
-    questionsNotAnswered <- allQuestions
-  } else {
-    questionsNotAnswered <- allQuestions[-questionsAnswered]
+  answeredCon <- ""
+  if (length(answered_questions > 0)){
+    answeredCon <- answered_questions[1]
+    for (answered in answered_questions[-1]){
+      answeredCon <- paste0(answeredCon, ", ", answered)
+    }
+    answeredCon <- paste0("WHERE questionID NOT IN (", answeredCon, ")")
   }
-  
-  question <- sample(questionsNotAnswered, 1, replace = FALSE)
-  
-  return(
-    list(
-    "questionID" = question ,
-    "question" = questionData[question,"question"],
-    "options" = c(questionData[question, "a"],
-                 questionData[question, "b"],
-                 questionData[question, "c"], 
-                 questionData[question, "d"]),
-    required = TRUE, # must select one option
-    "correct_option_index" = questionData[question, "correct_option_index"], #if option 1 is correct, etc
-    "answered_questions_updated" = c(questionsAnswered, question) #updated list of answered questions
-    
-    ))
-
+  data <- sqlQuery(paste0("SELECT * FROM GameQuestions ", answeredCon, " ORDER BY RAND() LIMIT 1"))
+  output <- list(
+    "questionID" = data[["questionID"]] ,
+    "question" = data[["question"]],
+    "options" =c(data[["a"]],data[["b"]],data[["c"]],data[["d"]]),
+    "correct_option_index" = data[["correct_option_index"]], #if option 1 is correct, etc
+    "answered_questions_updated" = append(data[["questionID"]], answered_questions) #updated list of answered questions
+    #"answered_questions_updated" = c(1, 2, 3) #updated list of answered questions
+  )
+  return(output)
+  #Close the connection
 }
+
 
 

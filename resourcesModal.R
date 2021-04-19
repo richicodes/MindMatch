@@ -32,7 +32,15 @@ resourcesModal <- function(){
       tags$li(tags$a(href="https://www.aware.org.sg/information/eating-disorders/", "Information about Eating Disorders")),
       tags$li(tags$a(href="https://www.nationaleatingdisorders.org/toolkit/parent-toolkit/eating-disorder-myths", "Eating Disorder Myths")),
       tags$li(tags$a(href="https://au.reachout.com/articles/how-to-help-a-friend-with-an-eating-disorder", "How to Help a Friend with an Eating Disorder"))
-    )
+    ),
+    tags$br(),
+    tags$h5("This game was developed by"),
+    tags$ul(
+      tags$li("Chung Wei Lin"),
+      tags$li("Ng Ri Chi"),
+      tags$li("Sarah Ramjoo"),
+      tags$li("Tan Yun Yi")
+    ),
   ) 
   return(modal)
 }

@@ -8,9 +8,9 @@ source("resourcesModal.R")
 source("endModal.R")
 
 # Name of the packages 
-pkgnames <- c("shiny")
+pkgnames1 <- c("shiny")
 # Use our custom load function
-loadPkgs(pkgnames)
+loadPkgs(pkgnames1)
 
 # Define server logic for random distribution application
 shinyServer(function(input, output, session) {
@@ -61,8 +61,14 @@ shinyServer(function(input, output, session) {
     #stores questions that are answered
     questionsAnswered = c(),
     
+    #stores question answered Now
+    questionAnsweredNow = NULL,
+    
     #stores answer
     answerCorrect = NULL, 
+    
+    #stores answer text
+    answerCorrectText = NULL,
     
     #stores cards that are opened
     cardsOpened = c(),
@@ -136,6 +142,7 @@ shinyServer(function(input, output, session) {
       )
     }
     else if (vals$tabOpen == "GameTab"){
+      print("STOP BYEBYE")
       if (gameVals$gameState == "PC1") {
         #prompt for choices if game state is AQ
         tabPanel("gameInfoDisplay", 
@@ -155,19 +162,21 @@ shinyServer(function(input, output, session) {
         #retrieve question
         questionOut <- questionRetrieve(gameVals$questionsAnswered)
         print(questionOut)
+        print("STOP HELLO")
         
         #sets correct value for answer and updates questions answered
-        gameVals$questionsAnswered <- questionOut[["answered_questions_updated"]]
+        gameVals$questionAnsweredNow <- questionOut[["questionID"]]
         gameVals$answerCorrect <- questionOut[["correct_option_index"]]
+        gameVals$answerCorrectText <- questionOut[["options"]][questionOut[["correct_option_index"]]]
         
         #prompt for choices if game state is AQ
         tabPanel("gameInfoDisplay",
                  paste0(gameVals$playerName, " answer this question"),
                  radioButtons("answerChoice", 
                               questionOut[["question"]], 
-                              choiceNames = questionOut[["options"]],
-                              choiceValues  = c(1, 2, 3, 4),
-                              selected = character(0)),
+                              choiceNames = c(questionOut[["options"]], "Show Answer"),
+                              choiceValues  = c(1, 2, 3, 4, 5),
+                              selected = 5),
                  actionButton("answerButt", "Answer"))
       }
     })
@@ -192,7 +201,7 @@ shinyServer(function(input, output, session) {
         noCardsOpened <- length(gameVals$cardsOpened)
         gameVals$gameProgress <- noCardsOpened/input$gameSize
         if ( gameVals$gameProgress >= 1 | 
-            length(gameVals$questionsAnswered) == 27){
+            length(gameVals$questionsAnswered) == 35){
           #if (T){ # use this as short cut to check end modal
           endGame()
         }
@@ -421,6 +430,8 @@ shinyServer(function(input, output, session) {
       #nothing happens if there is no input
     }
     else {
+      # unions questionanswerednow and questionanswered
+      gameVals$questionsAnswered <- append(gameVals$questionsAnswered, gameVals$questionAnsweredNow)
       if (input$answerChoice == gameVals$answerCorrect){
       #Adds score for player if correct
       showNotification("That is the correct answer!")
@@ -446,7 +457,7 @@ shinyServer(function(input, output, session) {
       }
       else {
         #if incorrect, add score of other player
-        showNotification("Wrong answer.")
+        showNotification(paste0("The choice was not correct. The correct choice was ", gameVals$answerCorrectText, "."))
         #checks for bonus card
         if (gameVals$actionCard == "Bonus"){
           playerVals$player1Score <- playerVals$player1Score - 1
