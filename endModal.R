@@ -15,6 +15,7 @@ endModal <- function(p1Score, p1Name, p2Score, p2Name){
     )} else {
       modal <- fluidPage(
         img(src="congratulations.jpg", height="70%", width="70%", style="display: block; margin-left: auto; margin-right: auto;", alt="found on google"),
+        tags$h6(tags$a(href="https://www.pinterest.com/pin/551620654356891248/", "image credit"), align="center"), 
         tags$hr(),
         tags$h4(paste(p1Name, "and", p2Name, "are tied with", p1Score, "points!"))
   )} 
